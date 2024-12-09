@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
+use App\Guards\AccessTokenGuard;
+use App\Providers\AccessTokenProvider;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,17 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $this->registerPolicies();
+
+        Auth::extend('access_token', function ($app, $name, array $config) {
+            return new AccessTokenGuard(
+                Auth::createUserProvider($config['provider']),
+                $app['request']
+            );
+        });
+
+        Auth::provider('access_token_provider', function ($app, array $config) {
+            return new AccessTokenProvider($config['model']);
+        });
     }
 }
