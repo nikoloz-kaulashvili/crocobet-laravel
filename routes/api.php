@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\UserTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,8 @@ Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/test', function () {
-        return response()->json(['message' => 'You are authenticated2']);
-    });
+    Route::post('/tokens', [UserTokenController::class, 'create'])->name('tokens.create');
+    Route::delete('/tokens/{token}', [UserTokenController::class, 'delete'])->name('tokens.delete');
 });
 
 
