@@ -26,10 +26,3 @@ Route::middleware('auth')->group(function () {
     Route::post('/tokens', [UserTokenController::class, 'create'])->name('tokens.create');
     Route::delete('/tokens/{token}', [UserTokenController::class, 'delete'])->name('tokens.delete');
 });
-
-
-
-
-// Route::post('/tokens', [TokenController::class, 'createToken']);
-// Route::delete('/tokens/{id}', [TokenController::class, 'deleteToken']);
-
