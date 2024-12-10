@@ -3,36 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserToken;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Services\UserTokenService;
 
 class UserTokenController extends Controller
 {
-    public function create(Request $request)
+    protected $userTokenService;
+
+    public function __construct(UserTokenService $userTokenService)
     {
-        if (!Gate::allows('create-token')) {
-            return response()->json(['message' => 'User not verified'], 403);
-        }
-
-        $token = UserToken::create([
-            'user_id' => Auth::id(),
-            'access_token' => Str::random(30),
-            'expires_at' => now()->addDays(30),
-        ]);
-
-        return response()->json(['token' => $token], 201);
+        $this->userTokenService = $userTokenService;
     }
 
-    public function delete(Request $request, UserToken $token)
+    public function create()
     {
-        if (!Gate::allows('delete-token', $token)) {
-            return response()->json(['message' => 'Unauthorized'], 403);
-        }
+        return $this->userTokenService->createToken();
+    }
 
-        $token->delete();
-
-        return response()->json(['message' => 'Token deleted successfully']);
+    public function delete(UserToken $token)
+    {
+        return $this->userTokenService->deleteToken($token);
     }
 }
