@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\UserRequestLog;
+use App\Services\RequestLoggerService;
 
 class RequestLogger
 {
@@ -15,14 +15,8 @@ class RequestLogger
         $user = Auth::user();
 
         if ($user) {
-            UserRequestLog::create([
-                'user_id' => $user->id,
-                'token_id' => 1, 
-                'request_method' => $request->method(),
-                'request_params' => json_encode($request),
-            ]);
-
-            $user->increment('requests_count');
+            $logger = app(RequestLoggerService::class);
+            $logger->logRequest($user, $request);
         }
 
         return $response;
