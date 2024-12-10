@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\UserTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,10 @@ use App\Http\Controllers\TokenController;
 */
 
 
-Route::middleware('auth.token')->group(function () {
-    Route::get('/test', function () {
-        return response()->json(Auth::guard('token')->user());
-    });
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+Route::middleware(['auth', 'request.logger'])->group(function () {
+    Route::post('/tokens', [UserTokenController::class, 'store'])->name('tokens.create');
+    Route::delete('/tokens/{token}', [UserTokenController::class, 'delete'])->name('tokens.delete');
 });
-
-
-Route::post('/tokens', [TokenController::class, 'createToken']);
-Route::delete('/tokens/{id}', [TokenController::class, 'deleteToken']);
-
-

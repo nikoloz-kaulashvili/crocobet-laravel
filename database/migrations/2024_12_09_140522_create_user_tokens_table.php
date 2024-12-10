@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('user_tokens', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); 
-            $table->string('access_token'); 
+            $table->foreignId('user_id')->constrained();
+            $table->string('access_token', 64); 
             $table->timestamp('expires_at'); 
             $table->timestamps(); 
-            
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 
