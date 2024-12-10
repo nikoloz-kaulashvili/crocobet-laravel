@@ -33,10 +33,6 @@ class AuthServiceProvider extends ServiceProvider
             return $user->is_verified;
         });
 
-        Gate::define('delete-token', function (User $user, UserToken $token) {
-            return $user->id === $token->user_id;
-        });
-
         Auth::extend('access_token', function ($app, $name, array $config) {
             return new AccessTokenGuard(
                 Auth::createUserProvider($config['provider']),

@@ -23,8 +23,8 @@ class UserTokenService
 
         $token = UserToken::create([
             'user_id' => Auth::id(),
-            'access_token' => Str::random(30),
-            'expires_at' => now()->addDays(30),
+            'access_token' => bin2hex(random_bytes(UserToken::TOKEN_LENGTH)),
+            'expires_at' => now()->addDays(UserToken::DAY_LENGTH),
         ]);
 
         return response()->json(['token' => $token], 201);
@@ -38,7 +38,7 @@ class UserTokenService
      */
     public function deleteToken(UserToken $token): JsonResponse
     {
-        if (!Gate::allows('delete-token', $token)) {
+        if (!Auth::user()->can('delete', $token)) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 

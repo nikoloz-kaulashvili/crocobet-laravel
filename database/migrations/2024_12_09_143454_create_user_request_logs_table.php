@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('user_request_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('user_id')->constrained();
             $table->unsignedBigInteger('token_id'); 
             $table->string('request_method'); 
             $table->json('request_params'); 
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

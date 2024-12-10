@@ -27,9 +27,9 @@ class DeleteExpiredTokens extends Command
     public function handle()
     {
         // Find and delete expired tokens
-        $deleted = UserToken::where('expires_at', '<', now())->delete();
+        $token = UserToken::where('expires_at', '<', now())->delete();
 
         // Output the result to the console
-        $this->info("$deleted expired tokens deleted successfully.");
+        $this->info("$token expired tokens deleted successfully.");
     }
 }

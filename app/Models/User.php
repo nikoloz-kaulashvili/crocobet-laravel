@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'access_token',
         'requests_count',
     ];
 
@@ -33,7 +33,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-        'access_token',
     ];
 
     /**
@@ -46,8 +45,13 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function requests()
+    public function requests(): HasMany
     {
         return $this->hasMany(UserRequestLog::class);
+    }
+
+    public function tokens(): HasMany
+    {
+        return $this->hasMany(UserToken::class);
     }
 }

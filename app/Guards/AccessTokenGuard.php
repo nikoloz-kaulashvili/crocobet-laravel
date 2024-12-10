@@ -30,12 +30,6 @@ class AccessTokenGuard implements Guard
             $this->user = $this->provider->retrieveByToken(null, $token);
         }
         return $this->user;
-        
-        if (!$this->user) {
-            return response()->json(['message' => 'User not authorized'], 401);
-        }
-
-        return $this->user;
     }
 
     public function validate(array $credentials = [])

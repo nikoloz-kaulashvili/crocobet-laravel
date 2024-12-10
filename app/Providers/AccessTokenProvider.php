@@ -22,8 +22,9 @@ class AccessTokenProvider implements UserProvider
     public function retrieveByToken($identifier, $token)
     {
         return $this->createModel()->newQuery()
-            ->where('access_token', $token)
-            ->first();
+            ->whereHas('tokens', function ($query) use ($token) {
+                $query->where('access_token', $token);
+            })->first();
     }
 
     public function updateRememberToken(Authenticatable $user, $token)

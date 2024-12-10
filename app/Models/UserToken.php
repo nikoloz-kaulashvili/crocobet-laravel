@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserToken extends Model
 {
     use HasFactory;
+
+    const TOKEN_LENGTH = 32;
+    const DAY_LENGTH = 30;
 
     /**
      * The table associated with the model.
@@ -34,13 +38,8 @@ class UserToken extends Model
      */
     public $timestamps = true;
 
-    /**
-     * Relationship with User model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }

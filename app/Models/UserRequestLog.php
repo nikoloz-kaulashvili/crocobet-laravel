@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserRequestLog extends Model
 {
@@ -35,23 +36,13 @@ class UserRequestLog extends Model
      */
     public $timestamps = true;
 
-    /**
-     * Relationship with User model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relationship with UserToken model.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function token()
-    {
-        return $this->belongsTo(UserToken::class, 'token_id');
-    }
+    // public function token(): BelongsTo
+    // {
+    //     return $this->belongsTo(UserToken::class, 'token_id');
+    // }
 }

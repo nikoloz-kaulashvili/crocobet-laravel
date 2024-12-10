@@ -1,54 +1,37 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
+use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
+use App\Services\AuthService;
+use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-    public function register(Request $request)
+    protected $authService;
+
+    public function __construct(AuthService $authService)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'access_token' => Str::random(30),
-        ]);
-
-        return response()->json([
-            'message' => 'User registered successfully',
-            'access_token' => $user->access_token,
-        ], 201);
+        $this->authService = $authService;
     }
 
-    public function login(Request $request)
+    public function register(RegisterRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-        ]);
+        $response = $this->authService->register($request->validated());
+        return response()->json($response, 201);
+    }
 
-        $user = User::where('email', $request->email)->first();
+    public function login(LoginRequest $request): JsonResponse
+    {
+        $response = $this->authService->login($request->validated());
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        if (isset($response['error'])) {
+            return response()->json(['message' => $response['error']], $response['status']);
         }
 
-        $user->access_token = Str::random(60);
-        $user->save();
-
-        return response()->json([
-            'message' => 'Login successful',
-            'access_token' => $user->access_token,
-        ]);
+        return response()->json($response);
     }
 }

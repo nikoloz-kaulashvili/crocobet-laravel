@@ -14,7 +14,7 @@ class UserTokenController extends Controller
         $this->userTokenService = $userTokenService;
     }
 
-    public function create()
+    public function store()
     {
         return $this->userTokenService->createToken();
     }
