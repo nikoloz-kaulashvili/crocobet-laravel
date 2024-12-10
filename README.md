@@ -10,27 +10,27 @@ crocobet-laravel
   - უსაფრთხო რეგისტრაცია და ავტორიზაცია.
   - ტოკენზე დაფუძნებული ავთენტიფიკაცია Laravel-ის guard სისტემით.
 **ტოკენების მართვა**:
-  ტოკენების შექმნა, და წაშლა.
-  policy ტოკენების უსაფრთხო წაშლისთვის.
+  - ტოკენების შექმნა, და წაშლა.
+  - policy ტოკენების უსაფრთხო წაშლისთვის.
 **Middleware ინტეგრაცია**:
-  მოთხოვნების ლოგირების Middleware მომხმარებლის რექვესთების დასალოგად.
+  - მოთხოვნების ლოგირების Middleware მომხმარებლის რექვესთების დასალოგად.
 **როლებისა და უფლებების კონტროლი**:
-  ავტორიზაცია Gates და Policies გამოყენებით.
+  - ავტორიზაცია Gates და Policies გამოყენებით.
 **Unit და Feature ტესტირება**:
-  ავტორიზაცია რეგისტრაციის ტესტირება.
+  - ავტორიზაცია რეგისტრაციის ტესტირება.
 
 
 **წინაპირობები**
-PHP 8.1 ან უფრო მაღალი ვერსია
-Composer
-MySQL 
-Node.js და npm 
+- PHP 8.1 ან უფრო მაღალი ვერსია
+- Composer
+- MySQL 
+- Node.js და npm 
 
 **პროექტის გაშვების ნაბიჯები**
 
 1. **გააკლონეთ რეპოზიტორია**:
-   git clone https://github.com/your-repository.git
-   cd your-repository
+   - git clone https://github.com/your-repository.git
+   - cd your-repository
 
 
 
@@ -40,22 +40,21 @@ Node.js და npm
 **რეგისტრაცია**
   `POST api/register`
   **მონაცემები**:
-    {
-      "name": "სახელი გვარი",
-      "email": "example@example.com",
-      "password": "password",
-    }
+    - {
+      - "name": "სახელი გვარი",
+      - "email": "example@example.com",
+      - "password": "password",
+    - }
     
   **პასუხის სტრუქტურა**:
-    json
-    {
-      "message": "User registered successfully",
-      "user": {
-        "id": 1,
-        "name": "სახელი გვარი",
-        "email": "example@example.com"
-      }
-    }
+    - {
+      - "message": "User registered successfully",
+      - "user": {
+        - "id": 1,
+        - "name": "სახელი გვარი",
+        - "email": "example@example.com"
+      - }
+    - }
     
 
 **ავტორიზაცია**
