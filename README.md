@@ -31,8 +31,10 @@ crocobet-laravel
 1. **გააკლონეთ რეპოზიტორია**:
    - git clone https://github.com/your-repository.git
    - cd your-repository
-
-
+   - composer install
+   - npm install
+   - php artisan migrate
+   - php artisan serve
 
 ### API დოკუმენტაცია
 
@@ -40,21 +42,21 @@ crocobet-laravel
 **რეგისტრაცია**
   `POST api/register`
   **მონაცემები**:
-    - {
-      - "name": "სახელი გვარი",
-      - "email": "example@example.com",
-      - "password": "password",
-    - }
+     {
+      "name": "სახელი გვარი",
+      "email": "example@example.com",
+      "password": "password",
+     }
     
   **პასუხის სტრუქტურა**:
-    - {
-      - "message": "User registered successfully",
-      - "user": {
-        - "id": 1,
-        - "name": "სახელი გვარი",
-        - "email": "example@example.com"
-      - }
-    - }
+    {
+      "message": "User registered successfully",
+      "user": {
+        "id": 1,
+        "name": "სახელი გვარი",
+        "email": "example@example.com"
+      }
+    }
     
 
 **ავტორიზაცია**
