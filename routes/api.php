@@ -22,7 +22,7 @@ use App\Http\Controllers\UserTokenController;
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'request.logger'])->group(function () {
     Route::post('/tokens', [UserTokenController::class, 'create'])->name('tokens.create');
     Route::delete('/tokens/{token}', [UserTokenController::class, 'delete'])->name('tokens.delete');
 });
