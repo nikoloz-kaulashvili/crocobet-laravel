@@ -41,8 +41,4 @@ class UserRequestLog extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function token(): BelongsTo
-    // {
-    //     return $this->belongsTo(UserToken::class, 'token_id');
-    // }
 }

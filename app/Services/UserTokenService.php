@@ -10,11 +10,6 @@ use Illuminate\Http\JsonResponse;
 
 class UserTokenService
 {
-    /**
-     * Create a new access token for the authenticated user.
-     *
-     * @return JsonResponse
-     */
     public function createToken(): JsonResponse
     {
         if (!Gate::allows('create-token')) {
@@ -30,12 +25,6 @@ class UserTokenService
         return response()->json(['token' => $token], 201);
     }
 
-    /**
-     * Delete an access token if authorized.
-     *
-     * @param UserToken $token
-     * @return JsonResponse
-     */
     public function deleteToken(UserToken $token): JsonResponse
     {
         if (!Auth::user()->can('delete', $token)) {
