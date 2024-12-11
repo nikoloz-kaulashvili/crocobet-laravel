@@ -29,8 +29,8 @@ crocobet-laravel
 **პროექტის გაშვების ნაბიჯები**
 
 1. **გააკლონეთ რეპოზიტორია**:
-   - git clone https://github.com/your-repository.git
-   - cd your-repository
+   - git clone https://github.com/nikoloz-kaulashvili/crocobet-laravel.git
+   - cd crocobet-laravel
    - composer install
    - npm install
    - php artisan migrate
